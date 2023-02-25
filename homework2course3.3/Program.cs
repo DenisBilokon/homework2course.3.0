@@ -10,7 +10,6 @@ namespace ImageProcessingApp
         static void Main(string[] args)
         {
 
-            // Створення делегата типу Action<Bitmap> для відображення оброблених зображень
             Action<Bitmap> displayDelegate = (bitmap) =>
             {
                 Console.WriteLine("Відображення зображення");
@@ -18,17 +17,14 @@ namespace ImageProcessingApp
                 bitmap.Dispose();
             };
 
-            // Створення набору делегатів типу Func<Bitmap, Bitmap> для операцій обробки зображень
             Func<Bitmap, Bitmap>[] imageProcessingDelegates =
             {
-                // Приклад операції обертання зображення на 90 градусів
                 (bitmap) =>
                 {
                     Console.WriteLine("Обертання зображення на 90 градусів");
                     bitmap.RotateFlip(RotateFlipType.Rotate90FlipNone);
                     return bitmap;
                 },
-                // Приклад операції збільшення розміру зображення в два рази
                 (bitmap) =>
                 {
                     Console.WriteLine("Збільшення розміру зображення в два рази");
@@ -41,10 +37,8 @@ namespace ImageProcessingApp
                 }
             };
 
-            // Завантаження набору зображень з директорії
             string[] imageFilePaths = Directory.GetFiles("images/", "*.jpg");
 
-            // Виконання операцій обробки зображень та відображення оброблених зображень
             foreach (string imageFilePath in imageFilePaths)
             {
                 Bitmap bitmap = new Bitmap(imageFilePath);
