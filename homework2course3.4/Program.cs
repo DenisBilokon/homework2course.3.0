@@ -9,16 +9,14 @@ namespace WordFrequencyReport
     {
         static void Main(string[] args)
         {
-            string directoryPath = @"C:\MyTextFiles"; // змінити на шлях до теки з текстовими файлами
+            string directoryPath = @"C:\MyTextFiles";
 
-            // Функція для токенізації тексту
             Func<string, IEnumerable<string>> tokenizer = text =>
             {
                 var separators = new char[] { ' ', '.', ',', ':', ';', '!', '?', '\r', '\n' };
                 return text.Split(separators, StringSplitOptions.RemoveEmptyEntries);
             };
 
-            // Функція для обчислення частоти слів
             Func<IEnumerable<string>, IDictionary<string, int>> wordFrequencyCounter = words =>
             {
                 var frequencyCounter = new Dictionary<string, int>();
@@ -36,7 +34,6 @@ namespace WordFrequencyReport
                 return frequencyCounter;
             };
 
-            // Функція для відображення статистики частоти слів
             Action<IDictionary<string, int>> displayWordFrequency = frequencyCounter =>
             {
                 foreach (var pair in frequencyCounter.OrderByDescending(pair => pair.Value))
@@ -45,14 +42,12 @@ namespace WordFrequencyReport
                 }
             };
 
-            // Зчитування текстових файлів та підрахунок частоти слів
             foreach (var filePath in Directory.GetFiles(directoryPath))
             {
                 var fileContent = File.ReadAllText(filePath);
                 var words = tokenizer(fileContent);
                 var frequencyCounter = wordFrequencyCounter(words);
 
-                // Виведення звіту
                 Console.WriteLine($"Звіт з файлу '{Path.GetFileName(filePath)}':");
                 displayWordFrequency(frequencyCounter);
                 Console.WriteLine();
